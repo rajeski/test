@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Flicks</title>
+  </head>
+  <body>
+    <h1>My Flicks, Movie API Documentation</h1>
+    <p>This web application will provide end-users with access to information for a 
+    variety of genres, movies and directors. Users accessing this website will be able to 
+    sign-up; update their details as well as create a list of their favorite movies.
+    </p>
+  </p>
+  <table class="content-table" style="width: 1000px;">
+    <thead>
+      <tr>
+        <th style="width: 120px;">Request</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th style="width: 100px;">Request Body Data Format</th>
+        <th>Response Body Data Format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Display a list of ALL available movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON containing ALL available movie data</td>
+      </tr>
+      <tr>
+        <td>Display a single movie's data by title</td>
+        <td>/movies/[Title]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON containing ALL available data about a given movie, including title, description, genre, 
+          director and movie-related image. 
+          Example: <p style="color:green">
+            {
+              title: 'Winged Migration',
+              genre: 'nature tail',
+              director: 'jacques perrin, jacques cluzard, michael debats',
+              main_actor: 'birds',
+              country: 'world',
+              year: 2003
+            }, 
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Display movie genre data</td>
+        <td>/movies/genres/[Name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON containing data about a movie genre.
+          Example: <p style="color:rgb(231, 8, 183)">
+            {
+              "Name": "Crime",
+              "Description": "A film genre whereas the protagonist and/or protagonists grapple with ethical 
+              or moral choices often involving violence, law enforcement, death and good versus evil."
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Display director data</td>
+        <td>/movies/directors/[Name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>JSON containing a given director's bio.
+          Example: <p style="color:rgb(6, 6, 112)">
+            {
+              "Name": "Stanley Kubrick",
+              "Bio": "Stanley Kubrick was an American film director, screenwriter and producer."
+              "Born": "1928"
+              "Died": "1999"
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Add new user accounts</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>JSON containing user data, containing the following: 
+          <p style="color: rgb(2, 2, 24)">
+            {
+              "username" : "genericman", 
+              "password" : "generic123",
+              "email" : "generic@man.com",
+              "date_of_birth" : "1984-05-01"
+            }
+          </p>
+        </td>
+        <td>JSON containing user data, including generating a unique My Flicks ID:
+          <p style="color:rgb(69, 69, 212)">
+            {
+              "topMovies": [],
+              "_id": "Need_to_figure_out_how_to_generate_this"
+              "username" : "genericwoman", 
+              "password" : "generic456",
+              "email" : "generic@woman.com",
+              "date_of_birth" : "1989-03-01"
+              "__v": 0
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Display an user's information update</td>
+        <td>/users/[Username]</td>
+        <td>PUT</td>
+        <td>JSON containing user's data,  containing the following: 
+          <p style="color: rgb(1, 22, 12)">
+            {
+              "username" : "genericman", 
+              "password" : "generic123",
+              "email" : "generic@man.com",
+              "date_of_birth" : "May 1, 1984"
+            }
+          </p>
+        </td>
+        <td>Post message confirming user's information was updated</td>
+      </tr>
+      <tr>
+        <td>Add movies to user's list of favorites</td>
+        <td>/users/[Username]/Movies/[MovieID]</td>
+        <td>POST</td>
+        <td>None</td>
+        <td>Post message confirming a movie or movies was added to a given user's favorites' list</td>
+      </tr>
+      <tr>
+        <td>Remove a movie or movies from a given user's favorites' list</td>
+        <td>/users/[Username]/Movies/[MovieID]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>Post message confirming the movie was removed</td>
+      </tr>
+      <tr>
+        <td>Remove a user's accounts</td>
+        <td>/users/[Username]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>Post message confirming the user's account was deleted</td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
