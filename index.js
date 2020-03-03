@@ -56,47 +56,48 @@ app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('An error occured');
 });
+
+mongoose.connect(`mongodb+srv://rajeski:testPassword@myflicksdb-vrzhr.mongodb.net/test?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log('connected to the database');
+  })
+  .catch((error) => {
+    console.group();
+    console.log('error connecting to the database: ', error.message);
+    console.log('Error name: ', error.name);
+    console.log('Error Reason: ', error.reason);
+    console.groupEnd();
+    process.exit(1);
+  });
   
 // POST users' request 
 
-app.post('/users',
-  // Validation logic 
-  [check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()],
-  (req, res) => {
-
-  // Check validation object for errors
-  var errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-
-  var hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({ Username : req.body.Username }) // Search if username already exists
+app.post('/users', 
+function(req, res) {
+  Users.findOne( {Username : req.body.Username })
   .then(function(user) {
     if (user) {
-      // If user is found, send a response "already exists" 
-        return res.status(400).send(req.body.Username + " already exists");
+      return res.status(400).send(req.body.Username + "already exists"); 
     } else {
-      Users
+      Users 
       .create({
-        Username : req.body.Username,
-        Password: hashedPassword,
-        Email : req.body.Email,
-        Birthday : req.body.Birthday
+        Username: req.body.Username, 
+        Password: req.body.Password, 
+        Email: req.body.Email, 
+        Birthday: req.body.Birthday  
       })
       .then(function(user) { res.status(201).json(user) })
       .catch(function(error) {
-          console.error(error);
-          res.status(500).send("Error: " + error);
-      });
-    }
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      })
+    }   
   }).catch(function(error) {
     console.error(error);
-    res.status(500).send("Error: " + error);
+    res.status(500).send("Error : + error");
   });
 });
 
